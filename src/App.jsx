@@ -1,20 +1,21 @@
 import { useState } from "react";
 import axios from "axios";
-import placeholderImage from './assets/images/movie_img_placeholder.png'
+import placeholderImage from "./assets/images/movie_img_placeholder.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar as faStarSolid } from "@fortawesome/free-solid-svg-icons";
+import { faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons";
 
 function App() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [moviesAndTvSeriesResults, setmoviesAndTvSeriesResults] = useState([]);
+  const [moviesAndTvSeriesResults, setMoviesAndTvSeriesResults] = useState([]);
 
   const API_KEY = import.meta.env.VITE_API_KEY;
   const api_url_movies = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${searchQuery}`;
   const api_url_tv_series = `https://api.themoviedb.org/3/search/tv?api_key=${API_KEY}&query=${searchQuery}`;
-  console.log(api_url_movies, api_url_tv_series);
 
   function getMovieNames(e) {
     setSearchQuery(e.target.value);
   }
-  console.log(searchQuery);
 
   function searchMovies() {
     axios.get(api_url_movies).then((res) => {
@@ -42,7 +43,7 @@ function App() {
         });
 
         const allResults = [...movies, ...tvs];
-        setmoviesAndTvSeriesResults(allResults);
+        setMoviesAndTvSeriesResults(allResults);
       });
     });
   }
@@ -60,17 +61,21 @@ function App() {
 
   const posterBaseUrl = "https://image.tmdb.org/t/p/w342";
 
-  function getStars(voteAverage){
-    const rating = Math.round(voteAverage / 2)
-    let stars = '';
-    for (let i= 1; i < 5; i++){
-      if (i < rating){
-        stars += '⭐';
-      } else{
-        stars += '☆'
+  function getStars(voteAverage) {
+    const rating = Math.ceil(voteAverage / 2);
+    let stars = [];
+    for (let i = 1; i <= 5; i++) {
+      if (i <= rating) {
+        stars.push(
+          <FontAwesomeIcon className="star" icon={faStarSolid} key={i} />,
+        );
+      } else {
+        stars.push(
+          <FontAwesomeIcon className="star" icon={faStarRegular} key={i} />,
+        );
       }
     }
-    return stars
+    return stars;
   }
 
   return (
@@ -94,9 +99,12 @@ function App() {
             <div>{movieResult.originalTitle}</div>
             <div>
               {movieResult.posterPath ? (
-                <img src={`${posterBaseUrl}${movieResult.posterPath}`} alt={movieResult.title} />
+                <img
+                  src={`${posterBaseUrl}${movieResult.posterPath}`}
+                  alt={movieResult.title}
+                />
               ) : (
-               <img className="placeholder_img" src={placeholderImage}></img>
+                <img className="placeholder_img" src={placeholderImage}></img>
               )}
             </div>
 
