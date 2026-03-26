@@ -3,12 +3,12 @@ import axios from "axios";
 
 function App() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [movieResults, setMovieResults] = useState([]);
+  const [moviesAndTvSeriesResults, setmoviesAndTvSeriesResults] = useState([]);
 
   const API_KEY = import.meta.env.VITE_API_KEY;
   const api_url_movies = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${searchQuery}`;
-  const api_url_tvs = `https://api.themoviedb.org/3/search/tv?api_key=${API_KEY}&query=${searchQuery}`;
-  console.log(api_url_movies, api_url_tvs);
+  const api_url_tv_series = `https://api.themoviedb.org/3/search/tv?api_key=${API_KEY}&query=${searchQuery}`;
+  console.log(api_url_movies, api_url_tv_series);
 
   function getMovieNames(e) {
     setSearchQuery(e.target.value);
@@ -27,7 +27,7 @@ function App() {
         };
       });
 
-      axios.get(api_url_tvs).then((res) => {
+      axios.get(api_url_tv_series).then((res) => {
         const tvs = res.data.results.map((tvSerie) => {
           return {
             id: tvSerie.id,
@@ -39,7 +39,7 @@ function App() {
         });
 
         const allResults = [...movies, ...tvs];
-        setMovieResults(allResults);
+        setmoviesAndTvSeriesResults(allResults);
       });
     });
   }
@@ -67,7 +67,7 @@ function App() {
       />
       <button onClick={searchMovies}>Search</button>
 
-      {movieResults.map((movieResult) => {
+      {moviesAndTvSeriesResults.map((movieResult) => {
         const flagCode = getFlagCode(movieResult.originalLanguage);
 
         return (
