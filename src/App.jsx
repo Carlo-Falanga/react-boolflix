@@ -44,6 +44,17 @@ function App() {
     });
   }
 
+  function getFlagCode(language) {
+    if (language === "en") return "gb";
+    if (language === "it") return "it";
+    if (language === "ja") return "jp";
+    if (language === "es") return "es";
+    if (language === "fr") return "fr";
+    if (language === "de") return "de";
+
+    return null;
+  }
+
   return (
     <>
       <input
@@ -56,14 +67,26 @@ function App() {
       />
       <button onClick={searchMovies}>Search</button>
 
-      {movieResults.map((movieResult) => (
-        <div key={movieResult.id}>
-          <div>{movieResult.title}</div>
-          <div>{movieResult.originalTitle}</div>
-          <div>{movieResult.originalLanguage}</div>
-          <div>{movieResult.vote_average}</div>
-        </div>
-      ))}
+      {movieResults.map((movieResult) => {
+        const flagCode = getFlagCode(movieResult.originalLanguage);
+
+        return (
+          <div key={movieResult.id}>
+            <div>{movieResult.title}</div>
+            <div>{movieResult.originalTitle}</div>
+
+            <div>
+              {flagCode ? (
+                <span className={`fi fi-${flagCode}`}></span>
+              ) : (
+                movieResult.originalLanguage.toUpperCase()
+              )}
+            </div>
+
+            <div>{movieResult.voteAverage}</div>
+          </div>
+        );
+      })}
     </>
   );
 }
