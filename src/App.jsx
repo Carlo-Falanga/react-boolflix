@@ -6,8 +6,9 @@ function App() {
   const [movieResults, setMovieResults] = useState([]);
 
   const API_KEY = import.meta.env.VITE_API_KEY;
-  const api_url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${searchQuery}`;
-  console.log(api_url);
+  const api_url_movies = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${searchQuery}`;
+  const api_url_tvs = `https://api.themoviedb.org/3/search/tv?api_key=${API_KEY}&query=${searchQuery}`;
+  console.log(api_url_movies, api_url_tvs);
 
   function getMovieNames(e) {
     setSearchQuery(e.target.value);
@@ -15,12 +16,33 @@ function App() {
   console.log(searchQuery);
 
   function searchMovies() {
-    axios.get(api_url).then((res) => {
-      console.log(res.data.results);
-      setMovieResults(res.data.results);
+    axios.get(api_url_movies).then((res) => {
+      const movies = res.data.results.map((movie) => {
+        return {
+          id: movie.id,
+          title: movie.title,
+          originalTitle: movie.original_title,
+          originalLanguage: movie.original_language,
+          voteAverage: movie.vote_average,
+        };
+      });
+
+      axios.get(api_url_tvs).then((res) => {
+        const tvs = res.data.results.map((tvSerie) => {
+          return {
+            id: tvSerie.id,
+            title: tvSerie.name,
+            originalTitle: tvSerie.original_name,
+            originalLanguage: tvSerie.original_language,
+            voteAverage: tvSerie.vote_average,
+          };
+        });
+
+        const allResults = [...movies, ...tvs];
+        setMovieResults(allResults);
+      });
     });
   }
-
 
   return (
     <>
@@ -33,19 +55,15 @@ function App() {
         onChange={getMovieNames}
       />
       <button onClick={searchMovies}>Search</button>
-      
-      {
-        movieResults.map(movieResult =>(
-          <div key={movieResult.id}>
-            <div>{movieResult.title}</div>
-            <div>{movieResult.original_title}</div>
-            <div>{movieResult.original_language}</div>
-            <div>{movieResult.vote_average}</div>
-          </div>
-            
-          ))
-        }
-      
+
+      {movieResults.map((movieResult) => (
+        <div key={movieResult.id}>
+          <div>{movieResult.title}</div>
+          <div>{movieResult.originalTitle}</div>
+          <div>{movieResult.originalLanguage}</div>
+          <div>{movieResult.vote_average}</div>
+        </div>
+      ))}
     </>
   );
 }
