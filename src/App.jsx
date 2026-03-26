@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import placeholderImage from './assets/images/movie_img_placeholder.png'
 
 function App() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -24,6 +25,7 @@ function App() {
           originalTitle: movie.original_title,
           originalLanguage: movie.original_language,
           voteAverage: movie.vote_average,
+          posterPath: movie.poster_path,
         };
       });
 
@@ -35,6 +37,7 @@ function App() {
             originalTitle: tvSerie.original_name,
             originalLanguage: tvSerie.original_language,
             voteAverage: tvSerie.vote_average,
+            posterPath: tvSerie.poster_path,
           };
         });
 
@@ -55,6 +58,8 @@ function App() {
     return null;
   }
 
+  const posterBaseUrl = "https://image.tmdb.org/t/p/w342";
+
   return (
     <>
       <input
@@ -74,6 +79,13 @@ function App() {
           <div key={movieResult.id}>
             <div>{movieResult.title}</div>
             <div>{movieResult.originalTitle}</div>
+            <div>
+              {movieResult.posterPath ? (
+                <img src={`${posterBaseUrl}${movieResult.posterPath}`} alt={movieResult.title} />
+              ) : (
+               <img className="placeholder_img" src={placeholderImage}></img>
+              )}
+            </div>
 
             <div>
               {flagCode ? (
