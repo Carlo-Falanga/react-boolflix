@@ -60,6 +60,19 @@ function App() {
 
   const posterBaseUrl = "https://image.tmdb.org/t/p/w342";
 
+  function getStars(voteAverage){
+    const rating = Math.round(voteAverage / 2)
+    let stars = '';
+    for (let i= 1; i < 5; i++){
+      if (i < rating){
+        stars += '⭐';
+      } else{
+        stars += '☆'
+      }
+    }
+    return stars
+  }
+
   return (
     <>
       <input
@@ -95,7 +108,7 @@ function App() {
               )}
             </div>
 
-            <div>{movieResult.voteAverage}</div>
+            <div>{getStars(movieResult.voteAverage)}</div>
           </div>
         );
       })}
