@@ -18,7 +18,8 @@ export default function AppMain({ moviesAndTvSeriesResults }) {
   const posterBaseUrl = "https://image.tmdb.org/t/p/w342";
 
   function getStars(voteAverage) {
-    const rating = Math.ceil(voteAverage / 2);
+    const rating =Math.max(1, Math.ceil(voteAverage / 2) ) ;
+
     let stars = [];
 
     for (let i = 1; i <= 5; i++) {
@@ -26,6 +27,7 @@ export default function AppMain({ moviesAndTvSeriesResults }) {
         stars.push(
           <FontAwesomeIcon className="star" icon={faStarSolid} key={i} />,
         );
+        
       } else {
         stars.push(
           <FontAwesomeIcon className="star" icon={faStarRegular} key={i} />,
