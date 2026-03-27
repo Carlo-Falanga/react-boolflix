@@ -59,17 +59,20 @@ export default function AppMain({ moviesAndTvSeriesResults }) {
                     />
 
                     )}
-                    <div className="card-img-overlay">
+                    <div className="card-img-overlay custom_cards p-3">
                       <h5 className="card-title">{movieResult.title}</h5>
                       <h6>{movieResult.originalTitle}</h6>
-                      <div>
+                      <div className="py-2">
                         {flagCode ? (
                           <span className={`fi fi-${flagCode}`}></span>
                         ) : (
                           movieResult.originalLanguage.toUpperCase()
                         )}
                       </div>
-                      <div>{getStars(movieResult.voteAverage)}</div>
+                      <div className="py-2">{getStars(movieResult.voteAverage)}</div>
+                      <div className="cards_overview pt-2">
+                        {movieResult.overview}
+                      </div>
                     </div>
                   </div>
                 </div>

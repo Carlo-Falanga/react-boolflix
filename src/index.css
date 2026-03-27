@@ -23,4 +23,29 @@ body {
   color: gold;
 }
 
+.custom_cards {
+  opacity: 0;
+  transition: 0.6s ease;
+}
+
+.card:hover .custom_cards {
+  opacity: 1;
+  background-color:rgba(0, 0, 0, 0.7)
+}
+
+.cards_overview {
+  /*
+Source - https://stackoverflow.com/a/41137262
+Posted by Jobincs, modified by community. See post 'Timeline' for change history
+Retrieved 2026-03-20, License - CC BY-SA 4.0
+*/
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: auto;
+}
+
+::-webkit-scrollbar{
+  display: none;
+}
 

@@ -19,6 +19,7 @@ function App() {
             originalLanguage: movie.original_language,
             voteAverage: movie.vote_average,
             posterPath: movie.poster_path,
+            overview: movie.overview
           };
         });
   
@@ -31,6 +32,7 @@ function App() {
               originalLanguage: tvSerie.original_language,
               voteAverage: tvSerie.vote_average,
               posterPath: tvSerie.poster_path,
+              overview: tvSerie.overview
             };
           });
   
