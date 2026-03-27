@@ -1,11 +1,28 @@
 @import "bootstrap";
 
-
-
-.placeholder_img{
-    max-width: 342px;
+body {
+  font-family: "Inter Variable", sans-serif;
 }
 
-.star{
-    color: gold;
+.nav_logo {
+  max-width: 150px;
 }
+
+
+header{
+    background-color: #191919;
+}
+.navbar_section{
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.placeholder_img {
+  max-width: 342px;
+}
+
+.star {
+  color: gold;
+}
+
+
