@@ -72,10 +72,10 @@ export default function AppHeader({
                   onChange={getMovieNames}
                 />
                 <button
-                  className="btn btn-light rou d-flex"
+                  className="btn text-white d-flex"
                   type="submit"
                 >
-                  Search
+                  <i className="bi bi-search"></i>
                 </button>
               </form>
             </div>

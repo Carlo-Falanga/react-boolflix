@@ -24,11 +24,11 @@ export default function AppMain({ moviesAndTvSeriesResults }) {
     for (let i = 1; i <= 5; i++) {
       if (i <= rating) {
         stars.push(
-          <FontAwesomeIcon className="star" icon={faStarSolid} key={i} />
+          <FontAwesomeIcon className="star" icon={faStarSolid} key={i} />,
         );
       } else {
         stars.push(
-          <FontAwesomeIcon className="star" icon={faStarRegular} key={i} />
+          <FontAwesomeIcon className="star" icon={faStarRegular} key={i} />,
         );
       }
     }
@@ -38,41 +38,46 @@ export default function AppMain({ moviesAndTvSeriesResults }) {
 
   return (
     <>
-      {moviesAndTvSeriesResults.map((movieResult) => {
-        const flagCode = getFlagCode(movieResult.originalLanguage);
+      <section className="my-5">
+        <div className="container">
+          <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+            {moviesAndTvSeriesResults.map((movieResult) => {
+              const flagCode = getFlagCode(movieResult.originalLanguage);
+              return (
+                <div className="col" key={movieResult.id}>
+                  <div className="card text-bg-dark">
+                    {movieResult.posterPath ? 
+                    <img
+                      src={`${posterBaseUrl}${movieResult.posterPath}`}
+                      className="card-img"
+                      alt={movieResult.title}
+                    /> :(
+                      <img
+                      src={placeholderImage}
+                      className="card-img"
+                      alt='placeholder'
+                    />
 
-        return (
-          <div key={movieResult.id}>
-            <div>{movieResult.title}</div>
-            <div>{movieResult.originalTitle}</div>
-
-            <div>
-              {movieResult.posterPath ? (
-                <img
-                  src={`${posterBaseUrl}${movieResult.posterPath}`}
-                  alt={movieResult.title}
-                />
-              ) : (
-                <img
-                  className="placeholder_img"
-                  src={placeholderImage}
-                  alt="placeholder"
-                />
-              )}
-            </div>
-
-            <div>
-              {flagCode ? (
-                <span className={`fi fi-${flagCode}`}></span>
-              ) : (
-                movieResult.originalLanguage.toUpperCase()
-              )}
-            </div>
-
-            <div>{getStars(movieResult.voteAverage)}</div>
+                    )}
+                    <div className="card-img-overlay">
+                      <h5 className="card-title">{movieResult.title}</h5>
+                      <h6>{movieResult.originalTitle}</h6>
+                      <div>
+                        {flagCode ? (
+                          <span className={`fi fi-${flagCode}`}></span>
+                        ) : (
+                          movieResult.originalLanguage.toUpperCase()
+                        )}
+                      </div>
+                      <div>{getStars(movieResult.voteAverage)}</div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
-        );
-      })}
+        </div>
+      </section>
     </>
   );
 }

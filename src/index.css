@@ -1,17 +1,15 @@
 @import "bootstrap";
-
+@import 'bootstrap-icons';
 body {
   font-family: "Inter Variable", sans-serif;
+   background-color: #141414;
+  
 }
 
 .nav_logo {
   max-width: 150px;
 }
 
-
-header{
-    background-color: #191919;
-}
 .navbar_section{
     font-size: 0.9rem;
     font-weight: 500;
